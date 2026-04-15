@@ -1,9 +1,10 @@
-FROM gradle:8.5-jdk21 AS build
+FROM eclipse-temurin:25-jdk AS build
 WORKDIR /app
 COPY . .
-RUN gradle buildFatJar --no-daemon
+RUN chmod +x gradlew
+RUN ./gradlew buildFatJar --no-daemon
 
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:25-jre
 WORKDIR /app
 COPY --from=build /app/build/libs/*-all.jar app.jar
 EXPOSE 8080
