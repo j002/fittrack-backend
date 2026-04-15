@@ -1,0 +1,19 @@
+ktor:
+  application:
+    modules:
+      - com.fittrack.ApplicationKt.module
+  deployment:
+    port: 8080
+
+jwt:
+  secret: "${JWT_SECRET}"
+  issuer: "fittrack"
+  audience: "fittrack-users"
+  realm: "FitTrack"
+  expirationDays: 30
+
+database:
+  url: "${DATABASE_URL}"
+  user: "${DB_USER}"
+  password: "${DB_PASSWORD}"
+  maxPoolSize: "10"
