@@ -8,6 +8,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID
 
@@ -50,6 +51,12 @@ class SessionRepository {
             .where { SessionLogsTable.userId eq uid }
             .orderBy(SessionLogsTable.date, SortOrder.DESC)
             .map { getSession(it[SessionLogsTable.id].value.toString()) }
+    }
+
+    fun deleteSession(sessionId: String) = transaction {
+        val sid = UUID.fromString(sessionId)
+        SetLogsTable.deleteWhere { sessionLogId eq sid }
+        SessionLogsTable.deleteWhere { id eq sid }
     }
 
     fun getSession(sessionId: String): SessionLogResponse = transaction {

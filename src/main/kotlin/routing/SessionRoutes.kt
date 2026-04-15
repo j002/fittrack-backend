@@ -26,6 +26,11 @@ fun Route.sessionRoutes(sessionRepo: SessionRepository) {
                 val id = call.parameters["id"]!!
                 call.respond(sessionRepo.getSession(id))
             }
+            delete("/{id}") {
+                val id = call.parameters["id"]!!
+                sessionRepo.deleteSession(id)
+                call.respond(HttpStatusCode.NoContent)
+            }
         }
         get("/stats") {
             val userId = call.principal<JWTPrincipal>()!!.payload.getClaim("userId").asString()
