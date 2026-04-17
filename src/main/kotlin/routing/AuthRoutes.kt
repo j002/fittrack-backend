@@ -1,10 +1,11 @@
 package com.fittrack.routing
 
-import com.fittrack.model.*
+import com.fittrack.model.AuthResponse
+import com.fittrack.model.LoginRequest
+import com.fittrack.model.RegisterRequest
 import com.fittrack.plugins.makeToken
 import com.fittrack.repository.UserRepository
 import io.ktor.http.*
-import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*

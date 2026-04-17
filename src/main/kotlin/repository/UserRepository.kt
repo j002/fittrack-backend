@@ -9,10 +9,10 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
-import java.util.UUID
+import java.util.*
 
 data class UserRecord(val id: String, val email: String, val name: String)
 
@@ -20,7 +20,7 @@ class UserRepository {
 
     fun register(email: String, password: String, name: String): UserRecord = transaction {
         val existing = UsersTable.selectAll()
-            .where { UsersTable.email eq email }
+            .where { UsersTable.email eq email.lowercase() }
             .firstOrNull()
 
         if (existing != null) throw ConflictException("Email déjà utilisé")
@@ -31,7 +31,7 @@ class UserRepository {
 
         UsersTable.insert {
             it[UsersTable.id] = EntityID(id, UsersTable)
-            it[UsersTable.email] = email
+            it[UsersTable.email] = email.lowercase()
             it[UsersTable.passwordHash] = hash
             it[UsersTable.name] = name
             it[createdAt] = now
@@ -42,7 +42,7 @@ class UserRepository {
 
     fun login(email: String, password: String): UserRecord = transaction {
         val row = UsersTable.selectAll()
-            .where { UsersTable.email eq email }
+            .where { UsersTable.email eq email.lowercase() }
             .firstOrNull()
             ?: throw NotFoundException("Utilisateur introuvable")
 

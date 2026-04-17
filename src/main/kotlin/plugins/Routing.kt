@@ -1,7 +1,11 @@
 package com.fittrack.plugins
 
-import com.fittrack.repository.*
-import com.fittrack.routing.*
+import com.fittrack.repository.ProgramRepository
+import com.fittrack.repository.SessionRepository
+import com.fittrack.repository.UserRepository
+import com.fittrack.routing.authRoutes
+import com.fittrack.routing.programRoutes
+import com.fittrack.routing.sessionRoutes
 import io.ktor.server.application.*
 import io.ktor.server.plugins.calllogging.*
 import io.ktor.server.routing.*

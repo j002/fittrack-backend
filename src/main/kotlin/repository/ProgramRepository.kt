@@ -3,13 +3,17 @@ package com.fittrack.repository
 import com.fittrack.db.ExercisesTable
 import com.fittrack.db.TrainingDaysTable
 import com.fittrack.db.UsersTable
-import com.fittrack.model.*
+import com.fittrack.model.ExerciseResponse
+import com.fittrack.model.TrainingDayRequest
+import com.fittrack.model.TrainingDayResponse
 import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
+import org.jetbrains.exposed.sql.deleteWhere
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
-import java.util.UUID
+import java.util.*
 
 class ProgramRepository {
 
